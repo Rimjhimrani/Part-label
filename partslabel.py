@@ -74,6 +74,40 @@ def format_part_no_v2(part_no):
     else:
         return Paragraph(f"<b><font size=34>{part_no}</font></b><br/><br/>", bold_style_v2)
 
+def format_description_v1(desc):
+    """Format description text with dynamic font sizing based on length for v1."""
+    if not desc or not isinstance(desc, str):
+        desc = str(desc)
+    
+    # Dynamic font sizing based on description length
+    desc_length = len(desc)
+    
+    if desc_length <= 30:
+        font_size = 15
+    elif desc_length <= 50:
+        font_size = 13
+    elif desc_length <= 70:
+        font_size = 11
+    elif desc_length <= 90:
+        font_size = 10
+    else:
+        font_size = 9
+        # Truncate very long descriptions to prevent overflow
+        desc = desc[:100] + "..." if len(desc) > 100 else desc
+    
+    # Create a custom style for this description
+    desc_style_v1 = ParagraphStyle(
+        name='Description_v1',
+        fontName='Helvetica',
+        fontSize=font_size,
+        alignment=TA_LEFT,
+        leading=font_size + 2,
+        spaceBefore=1,
+        spaceAfter=1
+    )
+    
+    return Paragraph(desc, desc_style_v1)
+
 def format_description(desc):
     """Format description text with proper wrapping."""
     if not desc or not isinstance(desc, str):
@@ -186,10 +220,10 @@ def generate_labels_from_excel_v1(df, progress_bar=None, status_text=None):
             location_str = str(part1[loc_col])
             location_values = parse_location_string_v1(location_str)
 
-            # Create tables for both parts
+            # Create tables for both parts with dynamic description formatting
             part_table = Table(
                 [['Part No', format_part_no_v1(part_no_1)],
-                 ['Description', desc_1[:50]]],
+                 ['Description', format_description_v1(desc_1)]],
                 colWidths=[4*cm, 11*cm],
                 rowHeights=[part_no_height, desc_loc_height]
             )
@@ -200,18 +234,19 @@ def generate_labels_from_excel_v1(df, progress_bar=None, status_text=None):
                 ('ALIGN', (1, 0), (1, -1), 'LEFT'),
                 ('VALIGN', (0, 0), (0, 0), 'MIDDLE'),
                 ('VALIGN', (1, 0), (1, 0), 'MIDDLE'),
-                ('VALIGN', (0, 1), (0, 1), 'TOP'),
-                ('VALIGN', (1, 1), (1, 1), 'TOP'),
+                ('VALIGN', (0, 1), (0, 1), 'MIDDLE'),
+                ('VALIGN', (1, 1), (1, 1), 'MIDDLE'),
                 ('LEFTPADDING', (0, 0), (-1, -1), 5),
                 ('RIGHTPADDING', (0, 0), (-1, -1), 5),
+                ('TOPPADDING', (0, 0), (-1, -1), 3),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
                 ('FONTNAME', (0, 0), (0, -1), 'Helvetica'),
                 ('FONTSIZE', (0, 0), (0, -1), 16),
-                ('FONTSIZE', (1, 1), (1, 1), 15),
             ]))
 
             part_table2 = Table(
                 [['Part No', format_part_no_v1(part_no_2)],
-                 ['Description', desc_2[:50]]],
+                 ['Description', format_description_v1(desc_2)]],
                 colWidths=[4*cm, 11*cm],
                 rowHeights=[part_no_height, desc_loc_height]
             )
@@ -222,13 +257,14 @@ def generate_labels_from_excel_v1(df, progress_bar=None, status_text=None):
                 ('ALIGN', (1, 0), (1, -1), 'LEFT'),
                 ('VALIGN', (0, 0), (0, 0), 'MIDDLE'),
                 ('VALIGN', (1, 0), (1, 0), 'MIDDLE'),
-                ('VALIGN', (0, 1), (0, 1), 'TOP'),
-                ('VALIGN', (1, 1), (1, 1), 'TOP'),
+                ('VALIGN', (0, 1), (0, 1), 'MIDDLE'),
+                ('VALIGN', (1, 1), (1, 1), 'MIDDLE'),
                 ('LEFTPADDING', (0, 0), (-1, -1), 5),
                 ('RIGHTPADDING', (0, 0), (-1, -1), 5),
+                ('TOPPADDING', (0, 0), (-1, -1), 3),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
                 ('FONTNAME', (0, 0), (0, -1), 'Helvetica'),
                 ('FONTSIZE', (0, 0), (0, -1), 16),
-                ('FONTSIZE', (1, 1), (1, 1), 15),
             ]))
 
             # Location table
@@ -547,7 +583,7 @@ def main():
             
             **Label Types:**
             - **Enhanced Labels (v2)**: Improved formatting with better text wrapping and spacing
-            - **Standard Labels (v1)**: Classic format with dual parts per location
+            - **Standard Labels (v1)**: Classic format with dual parts per location (now with adaptive description sizing)
             """)
 
 if __name__ == "__main__":
