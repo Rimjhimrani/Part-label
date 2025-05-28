@@ -492,8 +492,14 @@ def generate_labels_from_excel_v2(df, progress_bar=None, status_text=None):
         return None
 
 def main():
-    st.title("🏷️ Part Label Generator")
-    st.markdown("Generate professional part labels from Excel/CSV files")
+    st.title("🏷️ Rack Label Generator")
+    st.markdown(
+        "<p style='font-size:18px; font-style:italic; margin-top:-10px; text-align:left;'>"
+        "Designed and Developed by Agilomatrix</p>",
+        unsafe_allow_html=True
+    )
+
+    st.markdown("---")
 
     # Sidebar for navigation
     st.sidebar.title("Label Generator Options")
