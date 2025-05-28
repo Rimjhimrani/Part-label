@@ -505,7 +505,7 @@ def main():
     st.sidebar.title("Label Generator Options")
     label_type = st.sidebar.selectbox(
         "Choose Label Type:",
-        ["Enhanced Labels (v2)", "Standard Labels (v1)"]
+        ["Single Part", "Multiple Parts"]
     )
 
     # File upload
