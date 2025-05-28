@@ -587,7 +587,7 @@ def main():
             - Excel files (.xlsx, .xls)
             - CSV files (.csv)
             
-            **Label Types:**
+            **Rack Types:**
             - **Single Part**: One part assigned to a single location  
             - **Multiple Parts**: Multiple parts assigned to a single location
             """)
