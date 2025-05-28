@@ -504,7 +504,7 @@ def main():
     # Sidebar for navigation
     st.sidebar.title("Label Generator Options")
     label_type = st.sidebar.selectbox(
-        "Choose Label Type:",
+        "Choose Rack Type:",
         ["Single Part", "Multiple Parts"]
     )
 
