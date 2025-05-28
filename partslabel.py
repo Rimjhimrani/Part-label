@@ -540,12 +540,12 @@ def main():
                 
                 try:
                     # Generate PDF based on selected type
-                    if label_type == "Enhanced Labels (v2)":
+                    if label_type == "Single Part":
                         pdf_buffer = generate_labels_from_excel_v2(df, progress_bar, status_text)
-                        filename = "enhanced_labels.pdf"
+                        filename = "singlepart_labels.pdf"
                     else:
                         pdf_buffer = generate_labels_from_excel_v1(df, progress_bar, status_text)
-                        filename = "standard_labels.pdf"
+                        filename = "multiplepart_labels.pdf"
 
                     if pdf_buffer:
                         status_text.text("✅ PDF generated successfully!")
@@ -588,8 +588,8 @@ def main():
             - CSV files (.csv)
             
             **Label Types:**
-            - **Enhanced Labels (v2)**: Improved formatting with better text wrapping and spacing
-            - **Standard Labels (v1)**: Classic format with dual parts per location (now with adaptive description sizing)
+            - **Single Part**: One part assigned to a single location  
+            - **Multiple Parts**: Multiple parts assigned to a single location
             """)
 
 if __name__ == "__main__":
